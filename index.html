@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botão Temporizado</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #clock {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #linkButton {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #linkButton:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #linkButton:enabled {
+            background-color: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"></div>
+    <button id="linkButton" disabled>Ir para o link</button>
+
+    <script>
+        const button = document.getElementById('linkButton');
+        const clockDisplay = document.getElementById('clock');
+
+        function updateClock() {
+            const now = new Date();
+            const options = { timeZone: 'America/Sao_Paulo', hour12: false };
+            const timeString = now.toLocaleTimeString('pt-BR', options);
+            clockDisplay.textContent = timeString;
+
+            const [hours, minutes, seconds] = timeString.split(':');
+
+            if (hours === '00' && minutes === '00') {
+                button.disabled = false;
+                button.textContent = 'Clique para ir ao link!';
+            } else {
+                button.disabled = true;
+                button.textContent = 'Aguarde até meia-noite';
+            }
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // Atualiza imediatamente ao carregar a página
+
+        button.addEventListener('click', function() {
+            // Substitua 'SEU_LINK_AQUI' pelo link desejado
+            window.location.href = 'https://elgatongarboso.github.io/PAGINA-PRINCIPAL/';
+        });
+    </script>
+</body>
+</html>
